@@ -2,15 +2,12 @@
 <html lang="fr" ng-app="routeApp">
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	
+	<!-- BootStrap -->
+	<link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />	
 	
 	<title>Acceuil</title>        
-        
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/angular-route/angular-route.js"></script>
-    <script src="js/script.js"></script>
-	
+     
 </head>
 
 <body>
@@ -28,8 +25,8 @@
 				<li><a href="#/Gest-Filiere">Gestion de filière</a></li>
 				<li><a href="#/Gest-Delib">Gestion de délibération</a></li>
 				<li><a href="#/Gest-Scolarite">Gestion de scolarité</a></li>
-				<li><a class="navbar-left" href="#/Settings"><span class="glyphicon glyphicon-cog" aria-hidden="true" /></a></li>
 			</ul>
+			<ul class="nav navbar-nav navbar-right" ><a class="navbar-text" href="#/Settings"><span class="glyphicon glyphicon-cog"  aria-hidden="true" /> </a></ul>
 		</div>
 	</div>
 </nav>
@@ -49,5 +46,10 @@
 	
  </footer>
 
+	<!--Angular-->
+	<script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="js/script.js"></script>
+	
 </body>
 </html>
