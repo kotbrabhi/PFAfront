@@ -7,6 +7,7 @@
 
 body {
   padding: 0;
+  background-color:#2c3e50;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -80,4 +81,20 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+#delib {
+	background-color:#ecf0f1 ;
+}
+
+#charge {
+	background-color:#95a5a6;
+}
+
+#scolar{
+	background-color:#bdc3c7;
+}
+
+#fil{
+	background-color:#7f8c8d;
 }
