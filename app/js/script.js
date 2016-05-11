@@ -40,7 +40,11 @@ routeApp.config(['$routeProvider',
 			templateUrl: 'Gest-Scolarite/GestScolar.html',
             controller: 'GestScolarCtrl'
 			}).
-		
+			when ('/Settings', {
+			templateUrl: 'Settings/Settings.html',
+            controller: 'SettingsCtrl'
+			}).
+			
 		otherwise({
             redirectTo: '/home'
         });
@@ -83,5 +87,11 @@ routeAppControllers.controller('GestFiliereCtrl', ['$scope',
 routeAppControllers.controller('GestScolarCtrl', ['$scope',
     function($scope){
         $scope.message = "Gestion de scolarité";
+    }
+]);
+
+routeAppControllers.controller('SettingsCtrl', ['$scope',
+    function($scope){
+        $scope.message = "Settings";
     }
 ]);

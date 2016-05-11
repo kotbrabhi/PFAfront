@@ -8,7 +8,10 @@
  *
  * Main module of the application.
  */
-angular
+ 
+ var app = angular.module('frontpfaApp',[]);
+
+/*var app = angular
   .module('frontpfaApp', [
     'ngAnimate',
     'ngCookies',
@@ -32,4 +35,20 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  });*/
+  
+  app.controller('loginController',function($scope,$http){
+		$scope.submit = function(){
+			  $http({
+				  method : 'POST',
+				  url : 'http://10.3.21.104/gestionfilier/prof/login',
+				  data : {query : {email: 'z',password : 'i'}}
+			  }).then(function(response){
+				  
+				  alert(JSON.stringify(response.data,null));
+				    
+				  },function(response){
+				  alert(JSON.stringify(response.data,null)+'ss');
+				  })
+			}	  
+});
