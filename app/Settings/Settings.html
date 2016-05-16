@@ -1,0 +1,89 @@
+<button type="button" class="btn btn-info" ng-click="add()" ng-disabled="addVisible"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+
+    <input type="text" ng-model="q" class="search-input" placeholder="search..." />
+
+
+    <div class="panel panel-default" >
+
+  <!-- Table -->
+  <table class="table">
+      <tr>
+        <th >Nom</th>
+        <th >Prenom</th>
+        <th >Tel</th>
+        <th >Grade</th>
+        <th >Options</th>
+      </tr>
+      <tr ng-show="addVisible">
+        <td><input type="text" class="form-control" ng-model="user.nNom"/></td>
+        <td><input type="text" class="form-control" ng-model="user.nPrenom"/></td>
+        <td><input type="text" class="form-control" ng-model="user.nTel"/></td>
+        <td><input type="text" class="form-control" ng-model="user.nGrade"/></td>
+        <td>
+            <button class="btn btn-success" ng-click="valider()">Add</button>
+            <button class="btn btn-warning" ng-click="hideAdd()">Hide</button>
+        </td>
+      </tr>
+      <tr ng-repeat="a in items | filter:q | orderBy:'nom' track by $index">
+        <td ng-show="isEditable[$index]" ><input class="form-control" type="text" ng-model="tmpEdit[$index].nom" /></td>
+        <td ng-show="isEditable[$index]"><input class="form-control" type="text" ng-model="tmpEdit[$index].prenom" /></td>
+        <td ng-show="isEditable[$index]"><input class="form-control" type="text" ng-model="tmpEdit[$index].tel" /></td>
+        <td ng-show="isEditable[$index]"><input class="form-control" type="text" ng-model="tmpEdit[$index].grade"/></td>
+        <td ng-show="isEditable[$index]">
+            <button class="btn btn-success" ng-click="confirm($index,a)">Confirmer</button>
+            <button class="btn btn-info" ng-click="annuler($index)">Annuler</button>
+        </td>
+
+        <td ng-hide="isEditable[$index]" >{{a.nom}}</td>
+        <td ng-hide="isEditable[$index]" >{{a.prenom}}</td>
+        <td ng-hide="isEditable[$index]" >{{a.tel}}</td>
+        <td ng-hide="isEditable[$index]" >{{a.grade}}</td>
+        <td ng-hide="isEditable[$index]" >
+          <button class="btn btn-warning" ng-click="editer(a,$index)">editer</button>
+          <button class="btn btn-danger" ng-click="delete(a)">delete</button>
+          <button class="btn btn-info" ng-click="settings(a)"><span class="glyphicon glyphicon-cog" /></button>
+        </td>
+      </tr>
+  </table>
+</div>
+<div id="overlay" ng-show="isLightboxVisible" ng-click="hideLightbox()"></div>
+<div  ng-show="isLightboxVisible" >
+  <div ng-switch="lightboxContentSwitch">
+    
+    <div ng-switch-when="delete" id="switchDelete" class="alert alert-danger center-block text-center">
+      <h1>Attention!</h1>
+      Voulez vous vraiment supprimer {{activeObj.nom}} {{activeObj.prenom}}
+      <br/><br/>
+      <button class="btn btn-danger" ng-click="confirmDelete(activeObj)">Confirmer</button>
+      <button class="btn btn-info" ng-click="hideLightbox()">Annuler</button>
+    </div>
+
+    <div ng-switch-when="settings" id="switchSettings" class="alert alert-info center-block text-center">
+      <h4 class="text-center">{{activeObj.nom}} {{activeObj.prenom}}</h4>
+      <br/>
+      <input type="checkbox" class="form-controller" id="professeur" ng-checked="masks.prof"/>
+      <label for="professeur">Professeur</label><br/>
+
+      <input type="checkbox" class="form-controller" id="chefFillier" ng-checked="masks.filliere"/>
+      <label for="chefFillier">chef de Filliere</label><br/>
+      
+      <input type="checkbox" class="form-controller" id="chefDepartement" ng-checked="masks.departement"/>
+      <label for="chefDepartement">chef de departement</label><br/>
+
+      <input type="checkbox" class="form-controller" id="admin" ng-checked="masks.admin"/>
+      <label for="admin">Administrateur</label><br/>
+      <br/>
+
+      <center>
+        <button class="btn btn-info text-center" ng-click="">Valider</button>
+        <button class="btn btn-warning text-center" ng-click="">Annuler</button>
+      <center>
+    </div>
+
+    <div ng-switch-default>
+    </div>
+
+  </div>
+</div>
+<script src="Settings/service.js"></script>
+<script src="Settings/controller.js"></script>
