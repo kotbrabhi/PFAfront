@@ -21,6 +21,23 @@
     'routeAppControllers'
 ]);
   
+app.controller('tabMod',function($scope){
+    $scope.test = [
+        {
+            a : 'Oooo' ,
+            b : 'aaaa' ,
+            c : 'Iiii' ,
+            d : 'bbbbb'
+        },
+         {
+            a : 'hhhhhhh' ,
+            b : 'kkkkkkk' ,
+            c : 'ttttttt',
+            d : 'eeeeeee'
+        }
+    ] 
+});
+
 app.controller('loginController',function($scope,$http){
 		$scope.submit = function(){
 			  $http({

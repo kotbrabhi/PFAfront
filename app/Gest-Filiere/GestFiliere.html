@@ -1,3 +1,4 @@
+<div ng-controller="tabMod"> 
 <div id="wrapper">
 
         <!-- Sidebar -->
@@ -24,10 +25,60 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Simple Sidebar</h1>
-                        <p>Zzzzzzzzzzzzzz...</p>
                         
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                        <nav class="navbar navbar-default">
+                            <div class="container-fluid">
+                                
+                                
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <form class="navbar-form navbar-left" role="search">
+                                    <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="q" placeholder="Rechercher un module">
+                                    </div>
+                                </form>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="#"><span class="glyphicon glyphicon-trash"></span></a></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> </a></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-plus"></span></a></li>
+                                    <li class="divider-vertical"></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-sort"></span> </a></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-th"></span> </a></li>
+                                </ul>
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                         </nav>
+                        
+                        <div class="jumbotron">
+                                                      
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                    <th>#</th>
+                                    <th>Nom</th>
+                                    <th>Propriétaire</th>
+                                    <th>Dernière modification</th>
+                                    <th>OkbYe</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr ng-repeat="a in test | filter : q">
+                                    <th scope="row">{{$index}}</th>
+                                    <td>{{a.a}}</td>
+                                    <td>{{a.b}}</td>
+                                    <td>{{a.c}}</td>
+                                    <td>{{a.d}}</td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                           
+                        </div>
+                        
+                        <a href="#menu-toggle"  id="menu-toggle"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -35,7 +86,7 @@
         <!-- /#page-content-wrapper -->
 
 </div>
-    
+</div>
     <!-- Menu Toggle Script -->
     <script>
     $("#menu-toggle").click(function(e) {

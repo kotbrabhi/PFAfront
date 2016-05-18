@@ -98,3 +98,7 @@ body {
 #fil{
 	background-color:#7f8c8d;
 }
+
+.navbar {
+  margin-bottom : 0px !important ;
+}
