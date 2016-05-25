@@ -40,50 +40,81 @@
         <td ng-hide="isEditable[$index]" >{{a.grade}}</td>
         <td ng-hide="isEditable[$index]" >
           <button class="btn btn-warning" ng-click="editer(a,$index)">editer</button>
-          <button class="btn btn-danger" ng-click="delete(a)">delete</button>
-          <button class="btn btn-info" ng-click="settings(a)"><span class="glyphicon glyphicon-cog" /></button>
+          <button class="btn btn-danger" ng-click="delete(a)" data-toggle="modal" data-target="#myModal">delete</button>
+          <div class="dropdown">
+            <button class="btn btn-info dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ><span class="glyphicon glyphicon-cog" /></button>
+            
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li ng-click="privilege(a)" data-toggle="modal" data-target="#myModal"><a>Privileges</a></li>
+                <li ng-click="matiere(a)" data-toggle="modal" data-target="#myModal"><a>Matiere</a></li>
+              </ul>
+        </div>
         </td>
       </tr>
   </table>
 </div>
-<div id="overlay" ng-show="isLightboxVisible" ng-click="hideLightbox()"></div>
-<div  ng-show="isLightboxVisible" >
-  <div ng-switch="lightboxContentSwitch">
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div ng-switch="lightboxContentSwitch">
     
-    <div ng-switch-when="delete" id="switchDelete" class="alert alert-danger center-block text-center">
-      <h1>Attention!</h1>
-      Voulez vous vraiment supprimer {{activeObj.nom}} {{activeObj.prenom}}
-      <br/><br/>
-      <button class="btn btn-danger" ng-click="confirmDelete(activeObj)">Confirmer</button>
-      <button class="btn btn-info" ng-click="hideLightbox()">Annuler</button>
-    </div>
+            <div ng-switch-when="delete" id="switchDelete" class="alert alert-danger center-block text-center">
+                <div class="modal-header">
+                  <h1>Attention!</h1>
+                </div>
+                <div class="modal-body">
+                  <h3>Voulez vous vraiment supprimer {{activeObj.nom}} {{activeObj.prenom}}</h3>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-danger" ng-click="confirmDelete(activeObj)" data-dismiss="modal">Confirmer</button>
+                  <button class="btn btn-info" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
 
-    <div ng-switch-when="settings" id="switchSettings" class="alert alert-info center-block text-center">
-      <h4 class="text-center">{{activeObj.nom}} {{activeObj.prenom}}</h4>
-      <br/>
-      <input type="checkbox" class="form-controller" id="professeur" ng-checked="masks.prof"/>
-      <label for="professeur">Professeur</label><br/>
+            <div ng-switch-when="settings" id="switchSettings" class="alert alert-info center-block text-center">
+                <div class="modal-header">
+                  <h1 class="text-center">{{activeObj.nom}} {{activeObj.prenom}}</h1>
+                </div>
+                <div class="modal-body">
+                  <input type="checkbox" class="form-controller" id="professeur" ng-model="masks.prof" ng-change="confirmPrivilege()"/>
+                  <label for="professeur">Professeur</label><br/>
 
-      <input type="checkbox" class="form-controller" id="chefFillier" ng-checked="masks.filliere"/>
-      <label for="chefFillier">chef de Filliere</label><br/>
-      
-      <input type="checkbox" class="form-controller" id="chefDepartement" ng-checked="masks.departement"/>
-      <label for="chefDepartement">chef de departement</label><br/>
+                  <input type="checkbox" class="form-controller" id="chefFillier" ng-model="masks.filliere"/>
+                  <label for="chefFillier">chef de Filliere</label><br/>
+                  
+                  <input type="checkbox" class="form-controller" id="chefDepartement" ng-model="masks.departement"/>
+                  <label for="chefDepartement">chef de departement</label><br/>
 
-      <input type="checkbox" class="form-controller" id="admin" ng-checked="masks.admin"/>
-      <label for="admin">Administrateur</label><br/>
-      <br/>
+                  <input type="checkbox" class="form-controller" id="admin" ng-model="masks.admin"/>
+                  <label for="admin">Administrateur</label><br/>
+                  <br/>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info text-center" ng-click="confirmPrivilege()" data-dismiss="modal">Valider</button>
+                    <button class="btn btn-warning text-center" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
 
-      <center>
-        <button class="btn btn-info text-center" ng-click="">Valider</button>
-        <button class="btn btn-warning text-center" ng-click="">Annuler</button>
-      <center>
-    </div>
-
-    <div ng-switch-default>
+            <div ng-switch-when="matiere" id="switchDelete" class="alert alert-info center-block text-center">
+                <div class="modal-header">
+                  <h1>Matieres de {{activeObj.nom}} {{activeObj.prenom}}</h1>
+                </div>
+                <div class="modal-body">
+                  <h3 ng-repeat="a in test">{{a.nom}}</h3>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-danger" ng-click="" data-dismiss="modal">Confirmer</button>
+                  <button class="btn btn-info" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+       </div>
     </div>
 
   </div>
 </div>
-<script src="Settings/service.js"></script>
-<script src="Settings/controller.js"></script>
