@@ -1,3 +1,35 @@
+    <!-- Bootstrap -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+    <style>
+        .tr_active {
+            background: none repeat scroll 0 0 #4285f4!important;
+            color: whitesmoke!important;
+        }
+        
+        thead {
+            background : none repeat scroll 0 0  #eeeeee!important;
+            border-bottom: 1px solid rgba(0,0,0,.07)!important;
+
+        }
+       
+        #app_header {
+           margin: 0!important;
+           margin-bottom: 1px!important;
+            
+           background : none repeat scroll 0 0  #eeeeee!important;
+           
+          
+           -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.2);
+           box-shadow: 0 2px 4px rgba(0,0,0,.2);
+            
+           border: solid transparent!important;
+           border-width: 1px 1px 1px 6px!important;
+           border-bottom: 1px solid transparent!important;
+        }
+    </style>
+
+
 
 <div id="wrapper">
 
@@ -13,7 +45,7 @@
                     <a href="#">Modules <span style="float:right;" class="badge">4</span> </a> 
                 </li>
                 <li>
-                    <a href="#">Elements de Modules <span class="badge">4</span> </a> 
+                    <a href="#">Elements de Modules <span style="float:right;" class="badge">4</span> </a> 
                 </li>
 
             </ul>
@@ -53,65 +85,31 @@
                                 </div>
                                 </div>
 
-                                <!-- Collect the nav links, forms, and other content for toggling -->
-                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <form class="navbar-form navbar-left" role="search">
-                                    <div class="form-group">
-                                    <input type="text" class="form-control" ng-model="q" placeholder="Rechercher un module">
-                                    </div>
-                                </form>
-                                <ul class="nav navbar-nav navbar-right">
-                                    
-                                    <li  ng-show="table" ><a ng-click="delete(index)"><span class="glyphicon glyphicon-trash"></span></a></li>
-                                    <li  ng-show="table"><a href="#"><span class="glyphicon glyphicon-pencil"></span> </a></li>
-                                                                      
-                                    <li class="divider-vertical"></li>        
-                                    <li data-toggle="modal" data-target="#myModal" ><a><span class="glyphicon glyphicon-plus"></span></a></li>
-                                    <li id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">        
-                                        <span class="glyphicon glyphicon-sort"></span> </a>
-                                    </li>
-                                    
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                            <li><a href="#">Par nom</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
+                                
+                                  <!--Header-->
+                                
+
+                                  <div ng-include  src= "'Gest-Filiere/header.html'"></div> 
                                   
-                                        </ul>
-                                   
-                                    <li><a href="#"><span class="glyphicon glyphicon-th"></span> </a></li>
-                                </ul>
-                                </div><!-- /.navbar-collapse -->
                             </div><!-- /.container-fluid -->
                          </nav>
                         
                         <div class="jumbotron" style="high:100%;">
-                                                      
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                    <th>#</th>
-                                    <th>Nom</th>
-                                    <th>Propriétaire</th>
-                                    <th>Dernière modification</th>
-                                    <th>OkbYe</th>
-                                    </tr>
-                                </thead>
-                                <tbody >
-                                    <tr ng-repeat="a in test | filter : q">
-                                    <th scope="row"><input type="checkbox" ng-model="m" ng-change="select(m,a.a)" name={{a.a}}></th>
-                                    <td>{{index}}{{a.a}}</td>
-                                    <td>{{a.b}}</td>
-                                    <td>{{a.c}}</td>
-                                    <td>{{a.d}}</td>
-                                    </tr>
-                                </tbody>
-                                </table>
-                            </div>
-                           
+                          
+  
+    
+    <!-- EModules TAble-->
+    <div ng-include  src= "'Gest-Filiere/eModuleTable.html'"></div>
+  
+
+    <!--CRUD Modals-->
+    <div ng-include  src= "'Gest-Filiere/creeModal.html'"></div>
+    <div ng-include  src= "'Gest-Filiere/deleteModal.html'"></div>
+    <div ng-include  src= "'Gest-Filiere/shareModal.html'"></div>
+    <div ng-include  src= "'Gest-Filiere/editeModal.html'"></div>
+ 
                         </div>
-                        
-                        <a href="#menu-toggle"  id="menu-toggle"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                       <a href="#menu-toggle"  id="menu-toggle"><span id="chevron" class="glyphicon glyphicon-chevron-left"></span></a>
                         
                         
                     </div>
@@ -127,5 +125,8 @@
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
+        if(document.getElementById("chevron").className == "glyphicon glyphicon-chevron-right") document.getElementById("chevron").className = "glyphicon glyphicon-chevron-left";
+            else document.getElementById("chevron").className = "glyphicon glyphicon-chevron-right";
     });
     </script>
+

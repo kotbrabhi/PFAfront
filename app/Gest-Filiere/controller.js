@@ -1,130 +1,13 @@
-'use strict';
-
-/**
- * @ngdoc overview
- * @name frontpfaApp
- * @description
- * # frontpfaApp
- *
- * Main module of the application.
- */
- 
- 
- /*
- 	Declaration du module angualr  
- */
- 
- 
- var app = angular.module('pfaApp',[
-    // Dépendances du "module"
-    'ngRoute',
-    'routeAppControllers',
-    'ui.bootstrap.contextMenu'
-]);
-  
-
-
-app.controller('loginController',function($scope,$http){
-		$scope.submit = function(){
-			  $http({
-				  method : 'POST',
-				  url : 'http://10.3.21.104/gestionfilier/prof/login',
-				  data : {query : {email: 'z',password : 'i'}}
-			  }).then(function(response){
-				  
-				  alert(JSON.stringify(response.data,null));
-				    
-				  },function(response){
-				  alert(JSON.stringify(response.data,null)+'ss');
-				  })
-			}	  
-});
-
-/**
- * Configuration du module principal : App
- */
-
-app.config(['$routeProvider',
-    function($routeProvider) { 
-        
-        // Système de routage
-        $routeProvider
-        .when('/home', {
-            templateUrl: 'home.html',
-            controller: 'homeCtrl'
-        })
-		.when('/', {
-            templateUrl: 'home.html',
-            controller: 'homeCtrl'
-        })
-        .when('/Gest-Charges', {
-            templateUrl: 'Gest-Charges/GestCharges.html',
-            controller: 'GestChargesCtrl'
-          }).
-		  when ('/Gest-Delib', {
-		   templateUrl: 'Gest-Delib/GestDelib.html',
-            controller: 'GestDelibCtrl'
-			}).
-			when ('/Gest-Filiere', {
-			templateUrl: 'Gest-Filiere/GestFiliere.html',
-            controller: 'gestionFilierController'
-			}).
-			when ('/Gest-Scolarite', {
-			templateUrl: 'Gest-Scolarite/GestScolar.html',
-            controller: 'GestScolarCtrl'
-			}).
-			when ('/Settings', {
-			templateUrl: 'Settings/Settings.html',
-            controller: 'SettingsCtrl'
-			}).
-			
-		otherwise({
-            redirectTo: '/home'
-        });
-    }
-]);
-
-
-
-/**
- * Définition des contrôleurs
- */
-var routeAppControllers = angular.module('routeAppControllers', []);
-
-
-// Contrôleur de la page d'accueil
-routeAppControllers.controller('homeCtrl', ['$scope',
-    function($scope){
-        $scope.message = "Bienvenue sur la page d'accueil";
-    }
-]);
-
-routeAppControllers.controller('GestChargesCtrl', ['$scope',
-    function($scope){
-        $scope.message = "Gestion de charge";
-    }
-]);
-
-routeAppControllers.controller('GestDelibCtrl', ['$scope',
-    function($scope){
-        $scope.message = "Gestion de délibération";
-    }
-]);
-
-
-
-routeAppControllers.controller('GestScolarCtrl', ['$scope',
-    function($scope){
-        $scope.message = "Gestion de scolarité";
-    }
-]);
-
-
-
 
 /* global angular */
 var serverip = 'localhost'
+var app = angular.module('pfaApp',['ui.bootstrap.contextMenu']);
 
+app.run(function($rootScope){
+    $rootScope.selectedEModuleId = -1;
+    $rootScope.eModuleCreated = -1;
+    $rootScope.eModuleDeleted = -1;
+});
 
 app.service('eModuleService',function($http){
     this.cree = function(req){
@@ -216,7 +99,7 @@ app.service('eModulesList',function(eModuleService){
 });
 
 app.service('profsList',function(profService){
-    var items = [{id : '5768089c0f7f0211c3c55450',nom : "Oussama"},{id : '576808960f7f0211c3c5544f',nom : "Kotb"}]
+    var items = [{id : '57661a48f9fa1f87bed667da',nom : "Oussama"},{id : '57677729385118cd7efd33a2',nom : "Kotb"}]
     var load = function(){
             return profService.getProfs({})
                     .then(function successCallback(response){
@@ -525,3 +408,128 @@ app.controller('gestionFilierController',function($scope,eModuleService,profServ
         $scope.eModulesList = eModulesList.getItems;        
 });
 
+
+/*
+app.controller('creeEModuleConttroler',function($scope,$rootScope,eModuleService){
+    
+        $scope.profs = [
+            {
+                nom : "kotb",
+                id : "573a1790a72c2597d03f7d8f",
+            },
+            {
+                nom : "oussama",
+                id : "573a178ca72c2597d03f7d8e",
+            }
+        ];
+        
+        $scope.sendToItem = []
+        
+        $scope.req = {
+            intitulee : '',
+            sendTo : [],
+            userId : '573a1790a72c2597d03f7d8f'
+        }
+        
+        $scope.create = function(){
+            for(var i = 0;i<$scope.sendToItem.length;i++){
+                $scope.req.sendTo.push({id : $scope.sendToItem[i].id,permision : $scope.sendToItem[i].permision })
+            }
+            
+            eModuleService.creeEModule($scope.req)
+                .then(function successCallback(response) {
+                     $('#creeModal').modal('hide');
+                     $rootScope.eModuleCreated +=1;
+                }, function errorCallback(response) {
+                });
+        }
+        
+})
+
+app.controller('deleteEModuleConttroler',function($scope,$rootScope,eModuleService){
+    $scope.deleteEModule = function(){
+        eModuleService.deleteEModule({eModuleId : $rootScope.selectedEModuleId})
+                    .then(function successCallback(response) {
+                        $rootScope.eModuleDeleted+=1;
+                     }, function errorCallback(response) {       
+                     });;
+    }
+});
+
+app.controller('EModuleTableController',function($scope,$rootScope,eModuleService){
+    
+     $scope.$watch('$root.eModuleCreated',function(newVal,oldVal){
+         if(newVal > oldVal){
+              eModuleService.loadEModules({fields : "intitulee createdBy lastUpdate updatedBy"})
+                .then(function successCallback(response) {
+                     $scope.eModules = response.data.data;
+                }, function errorCallback(response) {
+                     
+                });
+         }
+                
+     });
+     
+     $scope.$watch('$root.eModuleDeleted',function(newVal,oldVal){
+         if(newVal > oldVal){
+              eModuleService.loadEModules({fields : "intitulee createdBy lastUpdate updatedBy"})
+                .then(function successCallback(response) {
+                     $scope.eModules = response.data.data;
+                }, function errorCallback(response) {
+                     
+                });
+         }
+                
+     });
+     
+   
+     
+     $scope.eModules =[];
+     eModuleService.loadEModules({fields : "intitulee createdBy lastUpdate updatedBy"})
+                .then(function successCallback(response) {
+                     $scope.eModules = response.data.data;
+                }, function errorCallback(response) {
+                     
+                });
+});
+
+app.controller('navController',function($scope,eModuleService){
+    
+});
+
+app.controller('shareEModuleConttroler',function($scope,$rootScope,eModuleService){
+    $scope.profs = [
+            {
+                nom : "kotb",
+                id : "573a1790a72c2597d03f7d8f",
+            },
+            {
+                nom : "oussama",
+                id : "573a178ca72c2597d03f7d8e",
+            }
+        ];
+    
+    $scope.sendToItem = []
+
+        $scope.req = {
+            eModuleId : $rootScope.selectedEModuleId,
+            sendTo : [],
+            userId : '573a1790a72c2597d03f7d8f'
+        }
+    
+    $scope.partger = function(){
+        $scope.req.eModuleId =  $rootScope.selectedEModuleId;
+        for(var i = 0;i<$scope.sendToItem.length;i++){
+                $scope.req.sendTo.push({id : $scope.sendToItem[i].id,permision : $scope.sendToItem[i].permision })
+            }
+        eModuleService.shareEModule($scope.req)
+            .then(function successCallback(response) {
+
+                }, function errorCallback(response) {
+                     
+                });
+        
+        
+    }
+});
+*/
