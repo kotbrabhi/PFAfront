@@ -31,6 +31,5 @@ app.controller('GestFiliereCtrl',function($scope){
     $scope.delete=function(i){//wheck click on confirmer(after delete), it delete the active prof
         alert(i);
 		$scope.test.splice($scope.test.indexOf($scope.table),1);
-
 	}
 });
