@@ -1,6 +1,6 @@
 
 /* global angular */
-var serverip = 'localhost'
+var serverip = 'localhost:8081'
 var app = angular.module('pfaApp',['ui.bootstrap.contextMenu']);
 
 app.run(function($rootScope){

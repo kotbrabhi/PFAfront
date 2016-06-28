@@ -123,7 +123,7 @@ routeAppControllers.controller('GestScolarCtrl', ['$scope',
 
 
 /* global angular */
-var serverip = 'localhost'
+var serverip = 'localhost:8081'
 
 
 app.service('eModuleService',function($http){
@@ -522,6 +522,7 @@ app.controller('headerController',function($scope,$rootScope,eModuleService,prof
 app.controller('gestionFilierController',function($scope,eModuleService,profService,eModulesList,profsList){
         
         $scope.selectedItemIndex = eModulesList.getSelectedItemIndex;
-        $scope.eModulesList = eModulesList.getItems;        
+        $scope.eModulesList = eModulesList.getItems;    
+        $    
 });
 
